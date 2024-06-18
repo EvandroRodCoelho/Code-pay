@@ -1,0 +1,5 @@
+@import "../styles/base/mixins";
+
+.teste {
+  @include center-both;
+}

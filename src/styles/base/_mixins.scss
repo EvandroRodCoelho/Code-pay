@@ -1,0 +1,10 @@
+@mixin center-both {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+@mixin rounded-corners($radius: 5px) {
+  border-radius: $radius;
+}
