@@ -1,0 +1,92 @@
+@import "../../../styles/base/variables";
+@import "../../../styles/base/mixins";
+.header {
+  width: 100vw;
+  height:  80px;
+  padding: 10px 0px 0px 0px;
+  gap: 10px;
+  border: 0px 0px 1px 0px;
+  opacity: 0px;
+  border: 1px $white;
+  display: flex;
+  justify-content: space-around;
+  &__text-container {
+    @include center-both;
+  }
+  &__title {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 24.2px;
+    text-align: left;
+    margin-right: 64px;
+  }
+
+  &__links {
+    @include center-both;
+    gap: 48px;
+    a {
+      text-decoration: none;
+    }
+  }
+
+  &__right {
+    @include center-both;
+    gap: 67.72px;
+  }
+  &__account-button {
+    background-color: transparent;
+    outline: 0;
+    border: 0;
+    @include center-both;
+    gap: 19.75px;
+    cursor: pointer;
+  }
+  &__cart {
+    @include center-both;
+    gap: 16.75px;
+  }
+  &__menu {
+    display: none;
+  }
+  .account {
+    display: none;
+  }
+
+}
+.header-text {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 19.36px;
+  text-align: left;
+  color: $dark-35;
+}
+
+
+
+@media  (max-width: 1100px) {
+  .header {
+    justify-content: space-between;
+    padding: 24px;
+
+    &__right {
+      gap:24px;
+    }
+    .account {
+      display: block ;
+    }
+    &__cart {
+      .items-cart {
+        display: none;
+      }
+    }
+    &__account-button {
+      display: none;
+    }
+    &__links {
+      display: none;
+    }
+    &__menu {
+      display: block;
+    }
+  }
+}
