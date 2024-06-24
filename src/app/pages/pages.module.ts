@@ -4,15 +4,14 @@ import { ContaComponent } from './compra/conta/conta.component';
 import { ComponentsModule } from '../components/components.module';
 
 
-
 @NgModule({
   declarations: [
     ContaComponent
   ],
   imports: [
     CommonModule,
-    ComponentsModule
+    ComponentsModule,
   ],
-  exports: [ContaComponent]
+  exports: [ContaComponent, ComponentsModule]
 })
 export class PagesModule { }

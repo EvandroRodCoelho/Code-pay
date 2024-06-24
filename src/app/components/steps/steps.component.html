@@ -1,0 +1,21 @@
+<aside class="steps-container" [class]=" 'step-'+Step">
+  <div>
+    <img src="assets/icon/user.svg" alt="">
+    <span class="step account">Conta</span>
+  </div>
+
+  <div class="divider"></div>
+  <div class="dispatch">
+    <img *ngIf="Step == 1" src="assets/icon/package.svg" alt="">
+    <img *ngIf="Step == 2 || Step == 3" src="assets/icon/package_green.svg" alt="">
+
+    <span>Envio</span>
+  </div>
+  <div class="divider"></div>
+
+  <div class="pay">
+    <img *ngIf="Step  != 3" src="assets/icon/wallet.svg" alt="">
+    <img *ngIf="Step == 3" src="assets/icon/wallet_green.svg" alt="">
+    <span>Pagamento</span>
+  </div>
+</aside>

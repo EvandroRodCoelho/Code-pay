@@ -1,0 +1,63 @@
+@import "../../../styles/base/mixins";
+@import "../../../styles/base/variables";
+.divider {
+  content: " ";
+  width: 12px;
+  height: 2px;
+  gap: 0px;
+  border: 1px 0px 0px 0px;
+  opacity: 0px;
+  background-color: $brand-color;
+}
+
+.steps-container  {
+   display: flex;
+   align-items: center;
+   justify-content: start;
+   gap: 48px;
+
+  div {
+    @include center-both;
+    gap: 8px;
+  }
+
+  .account {
+    color: $brand-color;
+  }
+}
+
+.step-1 {
+  .dispatch, .pay {
+    color: $dark-10;
+  }
+}
+.step-2 {
+  .dispatch {
+    color: $brand-color;
+  }
+  .pay {
+    color: $dark-10;
+  }
+}
+
+.step-3 {
+  .dispatch, .pay {
+    color: $brand-color;
+  }
+}
+
+
+
+@media screen and (max-width: 1100px) {
+  .steps-container  {
+    justify-content: space-between;
+    width: 100%;
+  }
+}
+@media screen and (max-width: 700px) {
+  .steps-container  {
+    justify-content: space-between;
+    max-width: 100%;
+    gap: 0;
+  }
+}
