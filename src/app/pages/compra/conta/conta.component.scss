@@ -1,49 +1,138 @@
 @import "../../../../styles/base/mixins";
+@import "../../../../styles/base/variables";
+
 
 .buy-account {
- // padding: 48px 24px 48px 24px;
-  gap: 48px;
-  opacity: 0px;
+  padding: 48px 24px 48px 24px;
+  padding-bottom: 0;
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  width: 100vw;
-
+  justify-content: center;
   &__container {
-    padding: 80px 0px 80px 0px;
-    gap: 56px;
-    opacity: 0px;
     display: flex;
-    gap: 10px;
-    width: 100%;
-    max-width: 90%;
-    div {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-
-    }
+    justify-content: space-between;
+    padding: 10px;
+    width: 80%;
   }
 }
+.details {
+  margin-top: 20px;
+  &__title {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 24.2px;
+    text-align: left;
+  }
+  &__form-container {
+    margin-top: 48px;
+    margin-bottom: 40px;
+  }
+  label {
+    color: $dark-30;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 19.36px;
+    text-align: left;
+    display: block;
+  }
+  input {
+    width: 100%;
+    padding: 10px 20px 10px 20px;
+    gap: 8px;
+    border-radius: 4px;
+    border: 1px 0px 0px 0px;
+    opacity: 0px;
+    text-align: left-center;
+    display: flex;
+    align-items: center;
+    outline: 0;
+    border: 2px solid #F3EFEF;
+    background-color:#F9F9F9;
+    margin-top: 16px;
+    cursor: pointer;
+
+    &:focus {
+      border: 1px solid $brand-color;
+    }
+  }
 
 
+  button {
+    height: Hug (51px)px;
+    padding: 16px 24px 16px 24px;
+    gap: 10px;
+    border-radius: 4px;
+    opacity: 0px;
+    outline: 0;
+    border: 0;
+    cursor: pointer;
+  }
+  .cancel-button {
+    color: $red;
+  }
+  .register-button {
+    color: $dark-10;
+  }
+  .password_container {
+    margin-top: 40px;
+  }
+  .container-buttons {
+    display: flex;
+    justify-content: right;
+    gap: 24px;
+  }
+  .green-button {
+    background-color: $brand-color;
+    color: white;
+  }
 
+  .container-button-form {
+    margin-top: 70px;
+  }
+  .account-buttons {
+    margin-top: 40px;
+  }
+}
 @media screen and (max-width: 1100px) {
   .buy-account {
     width: 100%;
     &__container {
       flex-direction: column;
+      width: 100%;
       div {
         display: block;
       }
     }
   }
+  .account-buttons {
+    display: none !important;
+    background-color: blue;
+  }
+  .details {
+    margin-top: 48px;
 
+    .container-buttons {
+      display: flex;
+      flex-direction: column;
+    }
+    button {
+      width: 100%;
+      display: block;
+    }
+    input {
+      padding: 12px, 16px, 12px, 16px
+    }
+  }
 }
-
 @media screen and (max-width: 700px) {
   .buy-account {
-    width: 100vw;
+    padding: 24PX;
+    width: 100%;
+  }
+}
+@media screen and (max-width: 344px) {
+  .buy-account {
+    padding: 0;
+    width: 100%;
   }
 }
