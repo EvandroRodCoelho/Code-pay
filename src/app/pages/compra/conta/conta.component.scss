@@ -8,11 +8,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 90VW;
   &__container {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     padding: 10px;
-    width: 80%;
+    width: 70VW;
+    gap: 20PX;
   }
 }
 .details {

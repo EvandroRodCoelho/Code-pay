@@ -1,0 +1,140 @@
+@import "../../../styles/base/mixins";
+@import "../../../styles/base/variables";
+
+.container {
+  padding-top: 56px;
+  h3, h4 {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 24.2px;
+    text-align: left;
+    color:$dark-10;
+
+  }
+  h3 {
+    margin-bottom: 46px;
+  }
+
+  &__price {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    align-items: center;
+    font-size: 16px;
+    button {
+      border-radius: 6px;
+      background: #F9F9F9;
+      cursor: pointer;
+      border: 1px solid #F3EFEF;
+      opacity: 0px;
+      padding: 14.75px;
+      outline: none;
+    }
+  }
+  &__ticket {
+    display: flex;
+    gap: 32px;
+    input {
+      width: 100%;
+      padding: 20px;
+      border-radius: 4px ;
+      border: 1px ;
+      opacity: 0px;
+      outline: 0;
+      &:focus {
+        border: 1px solid $brand-color;
+      }
+    }
+
+    button {
+      padding: 20px 24px 20px 24px;
+      gap: 10px;
+      border-radius: 4px ;
+      border: 2px solid $brand-color;
+      opacity: 0px;
+      background-color: #FFFF;
+      color: $brand-color;
+    }
+  }
+  .price {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 24.2px;
+    text-align: left;
+  }
+  .count-container {
+    @include center-both;
+    gap: 5px;
+  }
+
+  &__resume-price {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  &__total {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 24.2px;
+    color: $dark-10;
+  }
+  .free {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 21.78px;
+    color: $brand-color;
+  }
+
+  .title {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 21.78px;
+    color: $dark-20 ;
+  }
+  .rate {
+    font-family: Inter;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 21.78px;
+    text-align: left;
+    color: $dark-20 ;
+  }
+
+  .resume-price {
+    margin-top: 24px;
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+  }
+  .img-table  {
+    display: none;
+  }
+  .img-mobile {
+    display: none;
+  }
+  img {
+    width: 100%;
+  }
+  @media screen and (max-width:1100px){
+    .img-desk {
+      display: none;
+    }
+    .img-table {
+      display: block;
+    }
+    .img-mobile {
+      display: none;
+    }
+  }
+  @media screen and (max-width:700px){
+    .img-desk {
+      display: none;
+    }
+    .img-table {
+      display: none;
+    }
+    .img-mobile  {
+      display: block;
+    }
+  }
+}
