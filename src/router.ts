@@ -5,7 +5,7 @@ import { PayComponent } from "./app/pages/compra/pay/pay.component";
 
 export const router: Routes = [
   { path: '', redirectTo: 'compra/conta', pathMatch: 'full' },
-  { path: 'compra/conta', component: ContaComponent },
+  { path: 'compra/conta', component: ContaComponent, },
   { path: 'compra/envio', component: EnvioComponent },
   { path: 'compra/pagamento', component: PayComponent },
   { path: '**', redirectTo: 'compra/conta', pathMatch: 'full' }

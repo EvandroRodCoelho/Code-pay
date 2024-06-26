@@ -6,33 +6,37 @@
   <img class="img-mobile" src="assets/images/mouse_phone.png" alt="">
 
   <div>
-    <h4>Mouse Gamer Redragon</h4>
+    <h4>{{product.name}}</h4>
     <div class="container__price">
-      <h4 class="price">R$ 15,50</h4>
+      <h4 class="price">R$ {{product.price}}</h4>
       <div class="count-container">
-        <button>-</button>
-        <span>2</span>
-        <button>+</button>
+        <button (click)="decreaseCount()">-</button>
+        <span>{{count}}</span>
+        <button (click)="addCount()">+</button>
       </div>
     </div>
   </div>
 
   <div class="container__ticket">
-    <input type="text" placeholder="Cupom de Desconto">
-    <button>Aplicar</button>
+    <input type="text" [(ngModel)]="couponCode" placeholder="Cupom de Desconto">
+    <button (click)="applyCoupon()">Aplicar</button>
   </div>
   <div class="resume-price">
     <div class="container__resume-price">
       <span class="title">Taxa</span>
-      <span class="rate">R$3,75</span>
+      <span [class]="tax == '0,00' ? 'free' : 'rate'">
+        {{ tax | free }}
+      </span>
     </div>
     <div class="container__resume-price">
       <span class="title">Envio</span>
-      <span class="free">Gratis</span>
+      <span [class]="shipping == '0,00' ? 'free' : ''">
+        {{shipping | free}}
+      </span>
     </div>
     <div class="container__resume-price container__total">
       <span>Total</span>
-      <span>R$ 30,44</span>
+      <span>{{ 'R$' + fullPrice }}</span>
     </div>
   </div>
 </div>

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { PRODUCT_DATA } from '../../../data/productData';
 
 @Component({
   selector: 'app-pay',
@@ -7,4 +8,5 @@ import { Component } from '@angular/core';
 })
 export class PayComponent {
   step = 3;
+  product = PRODUCT_DATA;
 }

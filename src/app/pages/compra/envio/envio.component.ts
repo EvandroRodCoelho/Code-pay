@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { PRODUCT_DATA } from '../../../data/productData';
 
 @Component({
   selector: 'app-envio',
@@ -14,5 +15,5 @@ export class EnvioComponent {
   goToNextPage() {
     this.router.navigate(['compra/pagamento']);
   }
-
+  product = PRODUCT_DATA;
 }
