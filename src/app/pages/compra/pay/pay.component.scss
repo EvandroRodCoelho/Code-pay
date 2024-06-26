@@ -1,0 +1,168 @@
+@import "../../../../styles/base/mixins";
+@import "../../../../styles/base/variables";
+
+button {
+  height: Hug (51px)px;
+  padding: 16px 24px 16px 24px;
+  gap: 10px;
+  border-radius: 4px;
+  opacity: 0px;
+  outline: 0;
+  border: 0;
+  cursor: pointer;
+}
+.container-buttons {
+  display: flex;
+  justify-content: right;
+  gap: 24px;
+}
+.green-button {
+  background-color: $brand-color;
+  color: white;
+}
+.cancel-button {
+  color: $red;
+}
+input, select {
+  width: 100%;
+  padding: 10px 20px 10px 20px;
+  gap: 8px;
+  border-radius: 4px;
+  border: 1px 0px 0px 0px;
+  opacity: 0px;
+  text-align: left-center;
+  display: flex;
+  align-items: center;
+  outline: 0;
+  border: 2px solid #F3EFEF;
+  background-color:#F9F9F9;
+  margin-top: 16px;
+  cursor: pointer;
+
+  &:focus {
+    border: 1px solid $brand-color;
+  }
+}
+.register-button {
+  color: $dark-10;
+}
+.account-buttons {
+  margin-top: 40px;
+}
+.container-button-form {
+  margin-top: 70px;
+}
+.container-information {
+  margin-top: 46px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+h4 {
+  margin-top: 56px;
+}
+.buy-account {
+  padding: 48px 24px 48px 24px;
+  padding-bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 90VW;
+  &__container {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+    width: 70VW;
+    gap: 20PX;
+
+    .expiration-cvc-container {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      gap: 32px;
+      div {
+        flex: 1;
+      }
+      select {
+        display: block;
+      }
+      .expiration-container {
+
+        div.divider {
+          width: 29.41px;
+          height: 0.5px;
+          gap: 0px;
+          border: 1px solid $dark-30;
+          background-color: $dark-30;
+          opacity: 0px;
+          rotate: 107.82deg;
+          margin-top: 20px;
+        }
+      }
+      .expiration {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        input {
+          width:131.25px;
+        }
+      }
+    }
+  }}
+
+  @media screen and (max-width: 1100px) {
+    .buy-account {
+      width: 100%;
+      &__container {
+        flex-direction: column;
+        width: 100%;
+        div {
+          display: block;
+        }
+      }
+    }
+
+    .container-buttons  {
+      gap: 10px
+    }
+  }
+
+  @media screen and (max-width: 700px) {
+    .buy-account {
+      padding: 24PX;
+      width: 100%;
+    }
+    .container-buttons  {
+      margin-top: 12px;
+      display: flex;
+      gap: 10px;
+      button {
+        margin: 10px;
+        margin-left: 0;
+      }
+  }
+
+  @media screen and (max-width: 344px) {
+    .buy-account {
+      padding: 0;
+      width: 100%;
+    }
+    .expiration-container {
+      .expiration {
+        input {
+          width: 59.25px !important;
+        }
+      }
+    }
+    .container-buttons  {
+      margin-top: 12px;
+      display: flex;
+      gap: 10px;
+      button {
+        margin: 10px;
+        margin-left: 0;
+      }
+    }
+  }
+  }

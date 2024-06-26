@@ -2,34 +2,34 @@
   <div class="buy-account__container">
     <div class="buy-account__container-left">
       <app-steps [Step]='step'></app-steps>
-      <h4>Detalhes do envio</h4>
+      <h4>Detalhes do Pagamento</h4>
       <div class="container-information">
         <div>
-          <span>Usar o endereço salvo</span>
+          <span>Usar o cartão salvo</span>
           <select name="" id="">
-            <option value="">Rua 123</option>
+            <option value="">Evandro,121</option>
           </select>
         </div>
         <div>
-          <label for="">Cidade</label>
+          <span>Nome do cartão</span>
           <input type="text">
         </div>
         <div>
-          <label for="">Rua, Bairro</label>
+          <span>Nome do cartão</span>
           <input type="text">
         </div>
-        <div class="number-state-container">
-          <div>
-            <label for="">Numero</label>
-            <input type="text">
+        <div class="expiration-cvc-container ">
+          <div class="expiration-container">
+            <span>Expiração</span>
+            <div class="expiration">
+              <input type="number">
+              <div class="divider"></div>
+              <input type="text">
+            </div>
           </div>
-
           <div>
-            <label for="">Estado</label>
-            <input list="Estado" />
-            <datalist id="Estado">
-              <option value="Chrome"></option>
-            </datalist>
+            <span>CVC</span>
+            <input type="text">
           </div>
         </div>
       </div>
@@ -39,7 +39,7 @@
       </div>
       <div class="container-buttons container-button-form">
         <button class="cancel-button">Cancelar Pedido</button>
-        <button class="green-button" (click)="goToNextPage()">Continuar Comprando</button>
+        <button class="green-button">Continuar Comprando</button>
       </div>
     </div>
     <div class="buy-account__container-right">

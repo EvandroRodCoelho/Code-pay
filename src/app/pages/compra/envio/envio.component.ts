@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-envio',
@@ -6,5 +7,12 @@ import { Component } from '@angular/core';
   styleUrl: './envio.component.scss'
 })
 export class EnvioComponent {
-  step = 2
+  constructor(
+    private router: Router
+  ) { }
+  step = 2;
+  goToNextPage() {
+    this.router.navigate(['compra/pagamento']);
+  }
+
 }
