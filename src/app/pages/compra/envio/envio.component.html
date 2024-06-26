@@ -1,0 +1,49 @@
+<main class="buy-account">
+  <div class="buy-account__container">
+    <div class="buy-account__container-left">
+      <app-steps [Step]='step'></app-steps>
+      <h4>Detalhes do envio</h4>
+      <div class="container-information">
+        <div>
+          <span>Usar o endereço salvo</span>
+          <select name="" id="">
+            <option value="">Rua 123</option>
+          </select>
+        </div>
+        <div>
+          <label for="">Cidade</label>
+          <input type="text">
+        </div>
+        <div>
+          <label for="">Rua, Bairro</label>
+          <input type="text">
+        </div>
+        <div class="number-state-container">
+          <div>
+            <label for="">Numero</label>
+            <input type="text">
+          </div>
+
+          <div>
+            <label for="">Estado</label>
+            <input list="Estado" />
+            <datalist id="Estado">
+              <option value="Chrome"></option>
+            </datalist>
+          </div>
+        </div>
+      </div>
+      <div class="container-buttons account-buttons">
+        <button class="register-button">Registre-se para conta</button>
+        <button class="green-button">Entrar</button>
+      </div>
+      <div class="container-buttons container-button-form">
+        <button class="cancel-button">Cancelar Pedido</button>
+        <button class="green-button">Continuar Comprando</button>
+      </div>
+    </div>
+    <div class="buy-account__container-right">
+      <app-order-summary></app-order-summary>
+    </div>
+  </div>
+</main>

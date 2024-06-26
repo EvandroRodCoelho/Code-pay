@@ -1,7 +1,7 @@
 <main class="buy-account">
   <div class="buy-account__container">
     <div class="buy-account__container-left">
-      <app-steps></app-steps>
+      <app-steps [Step]='step'></app-steps>
       <div class="details">
         <h3 class="details__title">Detalhes da conta</h3>
         <div class="details__form-container">
@@ -21,7 +21,7 @@
           </div>
           <div class="container-buttons container-button-form">
             <button class="cancel-button">Cancelar Pedido</button>
-            <button class="green-button">Continuar Comprando</button>
+            <button (click)="goToNextPage()" class="green-button">Continuar Comprando</button>
           </div>
         </div>
       </div>

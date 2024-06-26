@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-steps',
@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./steps.component.scss']
 })
 export class StepsComponent {
-  Step = 1;
+  @Input() Step: number = {} as number;
 }
