@@ -11,6 +11,10 @@ button {
   border: 0;
   cursor: pointer;
 }
+
+.error {
+  color: red;
+}
 .container-buttons {
   display: flex;
   justify-content: right;

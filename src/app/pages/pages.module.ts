@@ -4,6 +4,7 @@ import { ContaComponent } from './compra/conta/conta.component';
 import { ComponentsModule } from '../components/components.module';
 import { EnvioComponent } from './compra/envio/envio.component';
 import { PayComponent } from './compra/pay/pay.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -15,6 +16,7 @@ import { PayComponent } from './compra/pay/pay.component';
   imports: [
     CommonModule,
     ComponentsModule,
+    ReactiveFormsModule
   ],
   exports: [ContaComponent, ComponentsModule]
 })
