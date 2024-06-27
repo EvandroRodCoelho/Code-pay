@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ProductModel } from '../../model/ProductModel';
+import { OrderService } from '../../services/order.service';
+import { CouponService } from '../../services/coupon.service';
 
 @Component({
   selector: 'app-order-summary',
@@ -15,82 +17,83 @@ export class OrderSummaryComponent implements OnInit {
   couponCode: string | null = null;
   discountAmount: number = 0;
 
+  constructor(private orderService: OrderService, private couponService: CouponService) { }
+
   ngOnInit(): void {
-    this.count = parseInt(sessionStorage.getItem('productCount') || '1', 10);
-    this.couponCode = sessionStorage.getItem('appliedCoupon');
-    if (this.couponCode)
-      this.applyCouponCount()
-    else
-      this.calculateFullPrice()
+    const sessionData = this.orderService.loadSessionData();
+    this.count = sessionData.count;
+    this.couponCode = sessionData.couponCode;
+
+    if (this.couponCode) {
+      this.applyCouponCount();
+    } else {
+      this.calculateFullPrice();
+    }
   }
 
   applyCoupon(): void {
-    const appliedCoupon = sessionStorage.getItem('appliedCoupon');
-    if (appliedCoupon) {
+    if (sessionStorage.getItem('appliedCoupon')) {
       alert('Você já aplicou um cupom anteriormente.');
       return;
     }
     this.applyCouponCount();
   }
 
+  applyCouponCount(): void {
+    try {
+      const price = parseFloat(this.product.price.replace(',', '.'));
+      const shipping = parseFloat(this.shipping.replace(',', '.'));
+      const result = this.couponService.applyCoupon(this.couponCode!, price, this.count, shipping);
 
-  applyCouponCount() {
-    const couponCodes: Record<string, number> = {
-      CUPOM10: 10,
-      CUPOM20: 20,
-      FREE_SHIPPING: 0,
-    };
+      this.discountAmount = result.discountAmount;
+      this.shipping = result.newShipping;
 
-    if (this.couponCode && this.couponCode in couponCodes) {
-      if (this.couponCode === 'FREE_SHIPPING') {
-        this.discountAmount = parseFloat(this.shipping.replace(',', '.'));
-        this.shipping = '0,00'
+      this.updateFullPrice();
+      this.orderService.saveCouponCode(this.couponCode!);
+    } catch (error) {
+      if (error instanceof Error) {
+        alert(error.message);
       } else {
-        const discountPercentage = couponCodes[this.couponCode];
-        const totalPrice = parseFloat(this.product.price.replace(',', '.')) * this.count;
-        this.discountAmount = (totalPrice * discountPercentage) / 100;
+        alert('Ocorreu um erro desconhecido.');
       }
-
-      const totalPrice = parseFloat(this.product.price.replace(',', '.')) * this.count;
-      this.fullPrice = (
-        totalPrice - this.discountAmount +
-        parseFloat(this.tax.replace(',', '.')) +
-        parseFloat(this.shipping.replace(',', '.'))
-      ).toFixed(2).replace('.', ',');
-
-      sessionStorage.setItem('appliedCoupon', this.couponCode);
-    } else {
-      alert('Cupom inválido!');
     }
   }
+
   addCount(): void {
     this.count++;
     this.updateSessionStorage();
     this.calculateFullPrice();
   }
 
-  private updateSessionStorage(): void {
-    sessionStorage.setItem('productCount', this.count.toString());
-  }
-
   decreaseCount(): void {
     if (this.count > 1) {
       this.count--;
-      this.calculateFullPrice();
       this.updateSessionStorage();
+      this.calculateFullPrice();
+    }
+  }
+
+  private updateSessionStorage(): void {
+    this.orderService.saveProductCount(this.count);
+  }
+
+  private updateFullPrice(): void {
+    const price = parseFloat(this.product.price.replace(',', '.'));
+    const tax = parseFloat(this.tax.replace(',', '.'));
+    const shipping = parseFloat(this.shipping.replace(',', '.'));
+
+    if (!isNaN(price) && !isNaN(tax) && !isNaN(shipping)) {
+      this.fullPrice = this.orderService.calculateFullPrice(price, tax, shipping, this.count, this.discountAmount);
     }
   }
 
   private calculateFullPrice(): void {
-    if (this.product.price && this.tax && this.shipping) {
-      const price = parseFloat(this.product.price.replace(',', '.'));
-      const tax = parseFloat(this.tax.replace(',', '.'));
-      const shipping = parseFloat(this.shipping.replace(',', '.'));
+    const price = parseFloat(this.product.price.replace(',', '.'));
+    const tax = parseFloat(this.tax.replace(',', '.'));
+    const shipping = parseFloat(this.shipping.replace(',', '.'));
 
-      if (!isNaN(price) && !isNaN(tax) && !isNaN(shipping)) {
-        const totalPrice = (price * this.count) + tax + shipping;
-        this.fullPrice = totalPrice.toFixed(2).replace('.', ',');
-      }
+    if (!isNaN(price) && !isNaN(tax) && !isNaN(shipping)) {
+      this.fullPrice = this.orderService.calculateFullPrice(price, tax, shipping, this.count, this.discountAmount);
     }
   }
 }
