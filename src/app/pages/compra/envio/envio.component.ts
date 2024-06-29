@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { PRODUCT_DATA } from '../../../data/productData';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Address } from '../../../model/Address'; // Importe sua classe Address
 import { states } from '../../../data/states';
-import { AbstractControl, AsyncValidatorFn, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { PRODUCT_DATA } from '../../../data/productData';
 
 @Component({
   selector: 'app-envio',
@@ -11,42 +11,43 @@ import { Observable } from 'rxjs';
   styleUrls: ['./envio.component.scss']
 })
 export class EnvioComponent {
-  step = 2;
-  product = PRODUCT_DATA;
-  states = states;
   addressForm: FormGroup;
+  step = 2;
+  states = states;
+  product = PRODUCT_DATA;
   constructor(private fb: FormBuilder, private router: Router) {
     this.addressForm = this.fb.group({
       city: ['', [Validators.required, Validators.minLength(2)]],
-      state: ['', Validators.required, this.asyncStateValidator()],
+      state: ['', Validators.required],
       street: ['', [Validators.required, Validators.minLength(3)]],
       number: [null, [Validators.required, Validators.pattern('^[0-9]+$')]]
     });
-  }
-  asyncStateValidator(): AsyncValidatorFn {
-    return (control: AbstractControl): Promise<{ [key: string]: any } | null> | Observable<{ [key: string]: any } | null> => {
-      const state = control.value;
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          if (!this.states.includes(state)) {
-            resolve({ invalidState: true });
-          } else {
-            resolve(null);
-          }
-        }, 1000);
-      });
-    };
+
   }
 
 
-  ValidateState() {
-    return false;
-  }
-  teste() {
-    console.log(this.addressForm.get('state')?.errors)
+  private isEmptyForm(): boolean {
+    const formValues = this.addressForm.value;
+    return Object.keys(formValues).every(key => !formValues[key]);
   }
 
   goToNextPage() {
-    this.router.navigate(['compra/pagamento']);
+    if (this.addressForm.valid) {
+
+      const address = new Address(
+        this.addressForm.value.city,
+        this.addressForm.value.state,
+        this.addressForm.value.street,
+        this.addressForm.value.number
+      );
+      sessionStorage.setItem('address', JSON.stringify(address));
+      this.router.navigate(['compra/pagamento']);
+    } else {
+      this.addressForm.markAllAsTouched();
+    }
+  }
+
+  get formControls() {
+    return this.addressForm.controls;
   }
 }

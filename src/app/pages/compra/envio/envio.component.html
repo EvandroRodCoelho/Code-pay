@@ -7,7 +7,7 @@
         <div>
           <span>Usar o endereço salvo</span>
           <select name="" id="">
-            <option value="">Rua 123</option>
+            <option *ngFor="let state in savedAddress" [value]="state"></option>
           </select>
         </div>
         <div>
@@ -52,7 +52,7 @@
             <label for="">Estado</label>
             <input list="Estado" formControlName="state" />
             <datalist id="Estado">
-              <option value="Chrome"></option>
+              <option *ngFor="let state of states" [value]="state">{{state}}</option>
             </datalist>
             <div class="error" *ngIf="addressForm.get('state')?.invalid && addressForm.get('state')?.touched">
               <small *ngIf="addressForm.get('state')?.errors?.['required']">
@@ -70,7 +70,7 @@
         <button class="green-button">Entrar</button>
       </div>
       <div class="container-buttons container-button-form">
-        <button class="cancel-button" (click)="teste()">Cancelar Pedido</button>
+        <button class="cancel-button">Cancelar Pedido</button>
         <button class="green-button" (click)="goToNextPage()">Continuar Comprando</button>
       </div>
     </div>
