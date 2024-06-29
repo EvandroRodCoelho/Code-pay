@@ -6,8 +6,11 @@
       <form [formGroup]="addressForm" class="container-information">
         <div>
           <span>Usar o endereço salvo</span>
-          <select name="" id="">
-            <option *ngFor="let state in savedAddress" [value]="state"></option>
+          <select (change)="onAddressChange($event)" [value]="">
+            <option value=""></option>
+            <option *ngFor="let savedAddress of savedAddressArray" [value]="savedAddress | json">
+              {{ savedAddress.street }}, {{ savedAddress.number }}
+            </option>
           </select>
         </div>
         <div>

@@ -1,52 +1,108 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Address } from '../../../model/Address'; // Importe sua classe Address
+import { AbstractControl, AsyncValidatorFn, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Address } from '../../../model/Address';
 import { states } from '../../../data/states';
 import { PRODUCT_DATA } from '../../../data/productData';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-envio',
   templateUrl: './envio.component.html',
   styleUrls: ['./envio.component.scss']
 })
-export class EnvioComponent {
+export class EnvioComponent implements OnInit {
   addressForm: FormGroup;
   step = 2;
   states = states;
   product = PRODUCT_DATA;
+  savedAddressArray: Address[] = [];
   constructor(private fb: FormBuilder, private router: Router) {
     this.addressForm = this.fb.group({
       city: ['', [Validators.required, Validators.minLength(2)]],
-      state: ['', Validators.required],
+      state: ['', Validators.required, this.asyncStateValidator()],
       street: ['', [Validators.required, Validators.minLength(3)]],
       number: [null, [Validators.required, Validators.pattern('^[0-9]+$')]]
     });
-
   }
-
-
-  private isEmptyForm(): boolean {
-    const formValues = this.addressForm.value;
-    return Object.keys(formValues).every(key => !formValues[key]);
+  selectAddressSaved(address: Address): void {
+    this.addressForm.setValue({
+      city: address.city,
+      state: address.state,
+      street: address.street,
+      number: address.number
+    });
   }
-
+  asyncStateValidator(): AsyncValidatorFn {
+    return (control: AbstractControl): Promise<{ [key: string]: any } | null> | Observable<{ [key: string]: any } | null> => {
+      const state = control.value;
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          if (!this.states.includes(state)) {
+            resolve({ invalidState: true });
+          } else {
+            resolve(null);
+          }
+        }, 1000);
+      });
+    };
+  }
+  ngOnInit(): void {
+    this.getSavedAddress()
+  }
+  getSavedAddress() {
+    const address = sessionStorage.getItem('addressArray');
+    if (address) {
+      try {
+        this.savedAddressArray = JSON.parse(address) as Address[];;
+        console.log(this.savedAddressArray)
+      } catch (error) {
+        console.error("Error parsing address from sessionStorage:", error);
+      }
+    } else {
+      console.log("No address found in sessionStorage");
+    }
+  }
   goToNextPage() {
     if (this.addressForm.valid) {
-
       const address = new Address(
         this.addressForm.value.city,
         this.addressForm.value.state,
         this.addressForm.value.street,
         this.addressForm.value.number
       );
-      sessionStorage.setItem('address', JSON.stringify(address));
+      this.addAddress(address)
       this.router.navigate(['compra/pagamento']);
     } else {
       this.addressForm.markAllAsTouched();
     }
   }
+  onAddressChange(event: Event): void {
+    const target = event.target as HTMLSelectElement;
+    const selectedAddressJson = target.value;
+    if (selectedAddressJson) {
+      const selectedAddress: Address = JSON.parse(selectedAddressJson);
+      this.selectAddressSaved(selectedAddress);
+    }
+  }
 
+  addAddress(newAddress: Address): void {
+    const storedAddressArray = sessionStorage.getItem('addressArray');
+    let addressArray: Address[] = [];
+    if (storedAddressArray) {
+      addressArray = JSON.parse(storedAddressArray);
+    }
+    const addressExists = addressArray.some(address =>
+      address.city === newAddress.city &&
+      address.state === newAddress.state &&
+      address.street === newAddress.street &&
+      address.number === newAddress.number
+    );
+    if (!addressExists) {
+      addressArray.push(newAddress);
+    }
+    sessionStorage.setItem('addressArray', JSON.stringify(addressArray));
+  }
   get formControls() {
     return this.addressForm.controls;
   }
