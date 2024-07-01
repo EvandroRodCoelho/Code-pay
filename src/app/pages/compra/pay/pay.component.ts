@@ -17,32 +17,16 @@ export class PayComponent implements OnInit {
   constructor(private fb: FormBuilder) {
     this.createForm();
   }
+
   createForm(): void {
+    const currentYear = new Date().getFullYear();
     this.cardForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(2)]],
-      number: [null, [Validators.required, Validators.pattern('^[0-9]+$')]],
-      expirationMouth: ['', [Validators.required]],
-      expirationYear: ['', [Validators.required]],
-      cvc: ['', []]
+      name: ['', [Validators.required, Validators.minLength(2), Validators.pattern('^[a-zA-Z ]*$')]],
+      number: [null, [Validators.required, Validators.pattern('^[0-9]{16}$')]],
+      expirationMouth: ['', [Validators.required, Validators.min(1), Validators.max(12)]],
+      expirationYear: ['', [Validators.required, Validators.min(2000), Validators.max(currentYear + 10)]],
+      cvc: ['', [Validators.required, Validators.pattern('^[0-9]{3,4}$')]]
     });
-  }
-
-  ngOnInit(): void {
-    this.getSavedCards();
-  }
-
-  getSavedCards(): void {
-    const address = sessionStorage.getItem('paymentCardArray');
-    if (address) {
-      try {
-        this.savedPaymentCardsArray = JSON.parse(address) as PaymentCard[];
-        console.log(this.savedPaymentCardsArray);
-      } catch (error) {
-        console.error("Error parsing cards from sessionStorage:", error);
-      }
-    } else {
-      console.log("No cards found in sessionStorage");
-    }
   }
 
   confirmPurchase(): void {
@@ -73,7 +57,23 @@ export class PayComponent implements OnInit {
     sessionStorage.setItem('paymentCardArray', JSON.stringify(paymentCardArray));
   }
 
+  ngOnInit(): void {
+    this.getSavedCards();
+  }
 
+  getSavedCards(): void {
+    const address = sessionStorage.getItem('paymentCardArray');
+    if (address) {
+      try {
+        this.savedPaymentCardsArray = JSON.parse(address) as PaymentCard[];
+        console.log(this.savedPaymentCardsArray);
+      } catch (error) {
+        console.error("Error parsing cards from sessionStorage:", error);
+      }
+    } else {
+      console.log("No cards found in sessionStorage");
+    }
+  }
 
   onPaymentCardChange(event: Event): void {
     const target = event.target as HTMLSelectElement;
@@ -85,11 +85,12 @@ export class PayComponent implements OnInit {
   }
 
   selectedPaymentCardSaved(paymentCard: PaymentCard): void {
+    const expiration = paymentCard.expiration.split('/');
     this.cardForm.setValue({
       name: paymentCard.name,
       number: paymentCard.number,
-      expirationMouth: paymentCard.expiration.split('/')[0],
-      expirationYear: paymentCard.expiration.split('/')[1],
+      expirationMouth: expiration[0],
+      expirationYear: expiration[1],
       cvc: paymentCard.cvc
     });
   }

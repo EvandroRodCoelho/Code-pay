@@ -13,26 +13,78 @@
             </option>
           </select>
         </div>
+
         <div>
           <span>Nome do cartão</span>
           <input type="text" formControlName="name">
+          <div *ngIf="cardForm.get('name')?.invalid && cardForm.get('name')?.touched">
+            <small class="error" *ngIf="cardForm.get('name')?.errors?.['required']">
+              Nome é obrigatório.
+            </small>
+            <small class="error" *ngIf="cardForm.get('name')?.errors?.['minlength']">
+              Deve ter no mínimo 2 caracteres.
+            </small>
+            <small class="error" *ngIf="cardForm.get('name')?.errors?.['pattern']">
+              Nome não deve conter números.
+            </small>
+          </div>
         </div>
+
         <div>
           <span>Número do cartão</span>
           <input type="text" formControlName="number">
+          <div *ngIf="cardForm.get('number')?.invalid && cardForm.get('number')?.touched">
+            <small class="error" *ngIf="cardForm.get('number')?.errors?.['required']">
+              Número do cartão é obrigatório.
+            </small>
+            <small class="error" *ngIf="cardForm.get('number')?.errors?.['pattern']">
+              Deve conter exatamente 16 dígitos.
+            </small>
+          </div>
         </div>
-        <div class="expiration-cvc-container ">
+
+        <div class="expiration-cvc-container">
           <div class="expiration-container">
             <span>Expiração</span>
             <div class="expiration">
               <input formControlName="expirationMouth" type="number">
               <div class="divider"></div>
-              <input formControlName="expirationYear" type="text">
+              <input formControlName="expirationYear" type="number">
+            </div>
+            <div *ngIf="cardForm.get('expirationMouth')?.invalid && cardForm.get('expirationMouth')?.touched">
+              <small class="error" *ngIf="cardForm.get('expirationMouth')?.errors?.['required']">
+                Mês de expiração é obrigatório.
+              </small>
+              <small class="error" *ngIf="cardForm.get('expirationMouth')?.errors?.['min']">
+                Mês deve ser entre 1 e 12.
+              </small>
+              <small class="error" *ngIf="cardForm.get('expirationMouth')?.errors?.['max']">
+                Mês deve ser entre 1 e 12.
+              </small>
+            </div>
+            <div *ngIf="cardForm.get('expirationYear')?.invalid && cardForm.get('expirationYear')?.touched">
+              <small class="error" *ngIf="cardForm.get('expirationYear')?.errors?.['required']">
+                Ano de expiração é obrigatório.
+              </small>
+              <small class="error" *ngIf="cardForm.get('expirationYear')?.errors?.['min']">
+                Ano deve ser entre 2000 e 2034
+              </small>
+              <small class="error" *ngIf="cardForm.get('expirationYear')?.errors?.['max']">
+                Ano deve ser no máximo 10 anos a partir do ano atual.
+              </small>
             </div>
           </div>
           <div>
             <span>CVC</span>
             <input type="text" formControlName="cvc">
+            <div *ngIf="cardForm.get('cvc')?.invalid && cardForm.get('cvc')?.touched">
+              <small class="error" *ngIf="cardForm.get('cvc')?.errors?.['required']">
+                CVC é obrigatório.
+              </small>
+              <small class="error" *ngIf="cardForm.get('cvc')?.errors?.['pattern']">
+                CVC deve ter 3 ou 4 dígitos.
+              </small>
+            </div>
           </div>
         </div>
       </form>
@@ -43,7 +95,7 @@
       <div class="container-buttons container-button-form">
         <button class="cancel-button">Cancelar Pedido</button>
         <button class="green-button" (click)="confirmPurchase()">Continuar Comprando</button>
-      </div>
+      </div>2
     </div>
     <div class="buy-account__container-right">
       <app-order-summary [product]="product" tax="3"></app-order-summary>

@@ -7,7 +7,8 @@
         <div>
           <span>Usar o endereço salvo</span>
           <select (change)="onAddressChange($event)">
-            <option *ngFor="let savedAddress of savedAddressArray" [value]="savedAddress">
+            <option disabled selected value="">Selecione um endereço salvo</option>
+            <option *ngFor="let savedAddress of savedAddressArray" [value]="savedAddress | json">
               {{ savedAddress.street }}, {{ savedAddress.number }}
             </option>
           </select>
@@ -29,23 +30,23 @@
           <input type="text" id="street" formControlName="street">
           <div class="error" *ngIf="addressForm.get('street')?.invalid && addressForm.get('street')?.touched">
             <small *ngIf="addressForm.get('street')?.errors?.['required']">
-              Rua e Bairro é obrigatório.
+              Rua e Bairro são obrigatórios.
             </small>
-            <small *ngIf="addressForm.get('city')?.errors?.['minlength']">
+            <small *ngIf="addressForm.get('street')?.errors?.['minlength']">
               Deve ter no mínimo 3 caracteres.
             </small>
           </div>
         </div>
         <div class="number-state-container">
           <div>
-            <label for="number">Numero</label>
+            <label for="number">Número</label>
             <input type="text" id="number" formControlName="number">
             <div class="error" *ngIf="addressForm.get('number')?.invalid && addressForm.get('number')?.touched">
               <small *ngIf="addressForm.get('number')?.errors?.['required']">
-                Numero é obrigatório.
+                Número é obrigatório.
               </small>
               <small *ngIf="addressForm.get('number')?.errors?.['pattern']">
-                Deve ser número
+                Deve ser número.
               </small>
             </div>
           </div>
@@ -61,7 +62,7 @@
                 Estado é obrigatório.
               </small>
               <small *ngIf="addressForm.get('state')?.errors?.['invalidState']">
-                Estado invalido
+                Estado inválido.
               </small>
             </div>
           </div>
