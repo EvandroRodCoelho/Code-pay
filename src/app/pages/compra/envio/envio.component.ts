@@ -12,12 +12,21 @@ import { Observable } from 'rxjs';
   styleUrls: ['./envio.component.scss']
 })
 export class EnvioComponent implements OnInit {
-  addressForm: FormGroup;
+  addressForm: FormGroup = {} as FormGroup;
   step = 2;
   states = states;
   product = PRODUCT_DATA;
   savedAddressArray: Address[] = [];
+
   constructor(private fb: FormBuilder, private router: Router) {
+    this.createForm();
+  }
+
+  ngOnInit(): void {
+    this.getSavedAddress();
+  }
+
+  createForm(): void {
     this.addressForm = this.fb.group({
       city: ['', [Validators.required, Validators.minLength(2)]],
       state: ['', Validators.required, this.asyncStateValidator()],
@@ -25,6 +34,7 @@ export class EnvioComponent implements OnInit {
       number: [null, [Validators.required, Validators.pattern('^[0-9]+$')]]
     });
   }
+
   selectAddressSaved(address: Address): void {
     this.addressForm.setValue({
       city: address.city,
@@ -33,6 +43,7 @@ export class EnvioComponent implements OnInit {
       number: address.number
     });
   }
+
   asyncStateValidator(): AsyncValidatorFn {
     return (control: AbstractControl): Promise<{ [key: string]: any } | null> | Observable<{ [key: string]: any } | null> => {
       const state = control.value;
@@ -47,15 +58,13 @@ export class EnvioComponent implements OnInit {
       });
     };
   }
-  ngOnInit(): void {
-    this.getSavedAddress()
-  }
-  getSavedAddress() {
+
+  getSavedAddress(): void {
     const address = sessionStorage.getItem('addressArray');
     if (address) {
       try {
-        this.savedAddressArray = JSON.parse(address) as Address[];;
-        console.log(this.savedAddressArray)
+        this.savedAddressArray = JSON.parse(address) as Address[];
+        console.log(this.savedAddressArray);
       } catch (error) {
         console.error("Error parsing address from sessionStorage:", error);
       }
@@ -63,7 +72,8 @@ export class EnvioComponent implements OnInit {
       console.log("No address found in sessionStorage");
     }
   }
-  goToNextPage() {
+
+  goToNextPage(): void {
     if (this.addressForm.valid) {
       const address = new Address(
         this.addressForm.value.city,
@@ -71,12 +81,13 @@ export class EnvioComponent implements OnInit {
         this.addressForm.value.street,
         this.addressForm.value.number
       );
-      this.addAddress(address)
+      this.addAddress(address);
       this.router.navigate(['compra/pagamento']);
     } else {
       this.addressForm.markAllAsTouched();
     }
   }
+
   onAddressChange(event: Event): void {
     const target = event.target as HTMLSelectElement;
     const selectedAddressJson = target.value;
@@ -103,6 +114,7 @@ export class EnvioComponent implements OnInit {
     }
     sessionStorage.setItem('addressArray', JSON.stringify(addressArray));
   }
+
   get formControls() {
     return this.addressForm.controls;
   }

@@ -3,43 +3,46 @@
     <div class="buy-account__container-left">
       <app-steps [Step]='step'></app-steps>
       <h4>Detalhes do Pagamento</h4>
-      <div class="container-information">
+      <form [formGroup]="cardForm" class="container-information">
         <div>
           <span>Usar o cartão salvo</span>
-          <select name="" id="">
-            <option value="">Evandro,121</option>
+          <select name="" id="" (change)="onPaymentCardChange($event)">
+            <option disabled selected value="">Selecione um cartão salvo</option>
+            <option *ngFor="let savedPaymentCard of savedPaymentCardsArray" [value]="savedPaymentCard | json">
+              {{savedPaymentCard.name}}, {{savedPaymentCard.number}}
+            </option>
           </select>
         </div>
         <div>
           <span>Nome do cartão</span>
-          <input type="text">
+          <input type="text" formControlName="name">
         </div>
         <div>
-          <span>Nome do cartão</span>
-          <input type="text">
+          <span>Número do cartão</span>
+          <input type="text" formControlName="number">
         </div>
         <div class="expiration-cvc-container ">
           <div class="expiration-container">
             <span>Expiração</span>
             <div class="expiration">
-              <input type="number">
+              <input formControlName="expirationMouth" type="number">
               <div class="divider"></div>
-              <input type="text">
+              <input formControlName="expirationYear" type="text">
             </div>
           </div>
           <div>
             <span>CVC</span>
-            <input type="text">
+            <input type="text" formControlName="cvc">
           </div>
         </div>
-      </div>
+      </form>
       <div class="container-buttons account-buttons">
         <button class="register-button">Registre-se para conta</button>
         <button class="green-button">Entrar</button>
       </div>
       <div class="container-buttons container-button-form">
         <button class="cancel-button">Cancelar Pedido</button>
-        <button class="green-button">Continuar Comprando</button>
+        <button class="green-button" (click)="confirmPurchase()">Continuar Comprando</button>
       </div>
     </div>
     <div class="buy-account__container-right">
