@@ -5,6 +5,7 @@ import { Address } from '../../../model/Address';
 import { states } from '../../../data/states';
 import { PRODUCT_DATA } from '../../../data/productData';
 import { Observable } from 'rxjs';
+import { AuthService } from './../../../services/auth.service';
 
 @Component({
   selector: 'app-envio',
@@ -17,8 +18,9 @@ export class EnvioComponent implements OnInit {
   states = states;
   product = PRODUCT_DATA;
   savedAddressArray: Address[] = [];
-
-  constructor(private fb: FormBuilder, private router: Router) {
+  user = this.authService.getUserEmail();
+  constructor(private fb: FormBuilder, private router: Router,
+    private authService: AuthService) {
     this.createForm();
   }
 

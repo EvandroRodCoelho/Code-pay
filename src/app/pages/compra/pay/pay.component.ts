@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PRODUCT_DATA } from '../../../data/productData';
 import { PaymentCard } from "../../../model/PaymentCard";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-pay',
@@ -13,8 +14,9 @@ export class PayComponent implements OnInit {
   step = 3;
   product = PRODUCT_DATA;
   savedPaymentCardsArray: PaymentCard[] = [];
+  user = this.authService.getUserEmail();
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private authService: AuthService) {
     this.createForm();
   }
 

@@ -4,7 +4,7 @@
       <app-steps [Step]='step'></app-steps>
       <div class="details">
         <h3 class="details__title">Detalhes da conta</h3>
-        <form [formGroup]="accountForm" class="details__form-container">
+        <form *ngIf="userLogging == false" [formGroup]="accountForm" class="details__form-container">
           <div>
             <label for="email">Email</label>
             <input type="email" id="email" formControlName="email" />
@@ -32,11 +32,15 @@
               <button class="green-button" (click)="onAssign()">Entrar</button>
             </div>
           </div>
-          <div class="container-buttons container-button-form">
-            <button class="cancel-button">Cancelar Pedido</button>
-            <button (click)="goToNextPage()" class="green-button">Continuar Comprando</button>
-          </div>
         </form>
+        <div class="userLogging" *ngIf="this.userLogging ==  true">
+          <span>Email:</span>
+          <p>{{this.userEmail}}</p>
+        </div>
+        <div class="container-buttons container-button-form">
+          <button class="cancel-button">Cancelar Pedido</button>
+          <button (click)="goToNextPage()" class="green-button">Continuar Comprando</button>
+        </div>
       </div>
     </div>
     <div class="buy-account__container-right">

@@ -19,6 +19,7 @@
 }
 .details {
   margin-top: 20px;
+  height: 100%;
   &__title {
     font-size: 20px;
     font-weight: 600;
@@ -68,6 +69,9 @@
     outline: 0;
     border: 0;
     cursor: pointer;
+  }
+  .userLogging {
+    margin: 20px 0;
   }
   .cancel-button {
     color: $red;

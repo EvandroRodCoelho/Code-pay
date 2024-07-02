@@ -6,7 +6,6 @@ import { Observable, of } from 'rxjs';
 })
 export class AuthService {
   private usersKey = 'registeredUsers';
-
   constructor() {
     if (!localStorage.getItem(this.usersKey)) {
       localStorage.setItem(this.usersKey, JSON.stringify([]));
@@ -48,10 +47,14 @@ export class AuthService {
     return !!currentUser;
   }
   getUser() {
-    return JSON.parse(localStorage.getItem('currentUser') ?? '');
+    const currentUser = localStorage.getItem('currentUser');
+    return currentUser ? true : false;
   }
 
-
+  getUserEmail() {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser') ?? '[]');
+    return currentUser ? currentUser.email : currentUser
+  }
   private getRegisteredUsers(): { email: string, password: string }[] {
     const usersString = localStorage.getItem(this.usersKey);
     return usersString ? JSON.parse(usersString) : [];

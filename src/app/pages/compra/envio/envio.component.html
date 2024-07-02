@@ -68,7 +68,7 @@
           </div>
         </div>
       </form>
-      <div class="container-buttons account-buttons">
+      <div *ngIf="user == []" class="container-buttons account-buttons">
         <button class="register-button">Registre-se para conta</button>
         <button class="green-button">Entrar</button>
       </div>
