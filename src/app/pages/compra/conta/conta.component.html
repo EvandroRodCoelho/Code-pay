@@ -4,26 +4,39 @@
       <app-steps [Step]='step'></app-steps>
       <div class="details">
         <h3 class="details__title">Detalhes da conta</h3>
-        <div class="details__form-container">
+        <form [formGroup]="accountForm" class="details__form-container">
           <div>
             <label for="email">Email</label>
-            <input type="email" id="email" />
+            <input type="email" id="email" formControlName="email" />
+            <div *ngIf="accountForm.get('email')?.invalid && accountForm.get('email')?.touched">
+              <small class="error" *ngIf="accountForm.get('email')?.errors?.['required']">
+                Email é obrigatório.
+              </small>
+              <small class="error" *ngIf="accountForm.get('email')?.errors?.['email']">
+                Deve ser um email
+              </small>
+            </div>
           </div>
           <div class="password_container">
             <label for="password">Senha</label>
-            <input type="password" id="password" />
+            <input type="password" id="password" formControlName="password" />
+            <div *ngIf="accountForm.get('password')?.invalid && accountForm.get('password')?.touched">
+              <small class="error" *ngIf="accountForm.get('password')?.errors?.['required']">
+                Senha é obrigatório.
+              </small>
+            </div>
           </div>
           <div>
             <div class="container-buttons account-buttons">
-              <button class="register-button">Registre-se para conta</button>
-              <button class="green-button">Entrar</button>
+              <button class="register-button" (click)="onRegister()">Registre-se para conta</button>
+              <button class="green-button" (click)="onAssign()">Entrar</button>
             </div>
           </div>
           <div class="container-buttons container-button-form">
             <button class="cancel-button">Cancelar Pedido</button>
             <button (click)="goToNextPage()" class="green-button">Continuar Comprando</button>
           </div>
-        </div>
+        </form>
       </div>
     </div>
     <div class="buy-account__container-right">
