@@ -92,7 +92,7 @@
         <button class="register-button">Registre-se para conta</button>
         <button class="green-button">Entrar</button>
       </div>
-      <div class="container-buttons container-button-form">
+      <div [ngClass]="user ?'userExists' :'userNotExits'" class="container-buttons container-button-form">
         <button class="cancel-button">Cancelar Pedido</button>
         <button class="green-button" (click)="confirmPurchase()">Continuar Comprando</button>
       </div>2

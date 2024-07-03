@@ -49,7 +49,10 @@ input, select {
 .account-buttons {
   margin-top: 40px;
 }
-.container-button-form {
+.userExists.container-button-form {
+  margin-top: 20px;
+}
+.userNotExits.container-button-form {
   margin-top: 70px;
 }
 .container-information {
