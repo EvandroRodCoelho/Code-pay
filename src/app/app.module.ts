@@ -3,8 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { PagesModule } from './pages/pages.module';
-import { FreePipe } from './pipe/freePipe';
+import { ComponentsModule } from './components/components.module';
+
 
 @NgModule({
   declarations: [
@@ -13,7 +13,7 @@ import { FreePipe } from './pipe/freePipe';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    PagesModule
+    ComponentsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
