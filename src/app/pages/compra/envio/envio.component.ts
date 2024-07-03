@@ -26,6 +26,8 @@ export class EnvioComponent implements OnInit {
 
   ngOnInit(): void {
     this.getSavedAddress();
+    sessionStorage.removeItem('currentAddress');
+    sessionStorage.removeItem('currentAddressTimestamp');
   }
 
   createForm(): void {
@@ -84,12 +86,16 @@ export class EnvioComponent implements OnInit {
         this.addressForm.value.number
       );
       this.addAddress(address);
+      this.setCurrentAddress(address);
       this.router.navigate(['compra/pagamento']);
     } else {
       this.addressForm.markAllAsTouched();
     }
   }
-
+  setCurrentAddress(address: Address) {
+    sessionStorage.setItem('currentAddress', JSON.stringify(address));
+    sessionStorage.setItem('currentAddressTimestamp', Date.now().toString());
+  }
   onAddressChange(event: Event): void {
     const target = event.target as HTMLSelectElement;
     const selectedAddressJson = target.value;

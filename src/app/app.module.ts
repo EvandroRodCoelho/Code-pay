@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ComponentsModule } from './components/components.module';
+import { PayGuard } from './guard/pay.guard';
 
 
 @NgModule({
@@ -15,7 +16,7 @@ import { ComponentsModule } from './components/components.module';
     AppRoutingModule,
     ComponentsModule
   ],
-  providers: [],
+  providers: [PayGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
