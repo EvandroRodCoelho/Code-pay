@@ -107,6 +107,12 @@ h4 {
         display: flex;
         align-items: center;
         gap: 5px;
+        overflow: hidden;
+        padding-top: 10px;
+
+        div {
+          max-height: 0.5px;
+        }
         input {
           width:131.25px;
         }
@@ -145,6 +151,15 @@ h4 {
         margin-left: 0;
       }
   }
+  .expiration-cvc-container {
+   flex-direction: column;
+   align-items: start;
+   justify-content: start;
+   input {
+    width: 100%;
+   }
+  }
+}
 
   @media screen and (max-width: 344px) {
     .buy-account {
@@ -154,9 +169,12 @@ h4 {
     .expiration-container {
       .expiration {
         input {
-          width: 59.25px !important;
+          flex: 1;
         }
       }
+    }
+    .cvc-container {
+      width: 100%;
     }
     .container-buttons  {
       margin-top: 12px;
@@ -167,5 +185,4 @@ h4 {
         margin-left: 0;
       }
     }
-  }
   }
